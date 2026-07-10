@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jadi Life Planner Manulife Syariah</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root{
+    --ink:#132420;
+    --paper:#FAF7F0;
+    --paper-dim:#F1ECDF;
+    --teal:#0E3F3A;
+    --teal-deep:#082B27;
+    --gold:#B9902E;
+    --gold-soft:#E4CE95;
+    --line:#D8D0BC;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    color:var(--teal-deep);
+  }
+  .mono{
+    font-family:'JetBrains Mono',monospace;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    font-size:12px;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+  /* ---------- signature motif: interlocking step-diamond rule ---------- */
+  .motif{
+    display:flex;
+    align-items:center;
+    gap:0;
+    height:14px;
+  }
+  .motif svg{display:block;}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(250,247,240,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  header .wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    height:64px;
+  }
+  .brand{
+    font-family:'Fraunces',serif;font-weight:600;font-size:19px;color:var(--teal-deep);
+  }
+  .brand span{color:var(--gold);}
+  header a.cta-mini{
+    font-family:'Inter';font-weight:600;font-size:14px;
+    color:var(--paper);background:var(--teal);
+    padding:9px 18px;border-radius:var(--radius);
+    text-decoration:none;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:88px 0 72px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero .wrap{position:relative;z-index:2;}
+  .eyebrow{
+    color:var(--gold);
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(36px,5.4vw,64px);
+    line-height:1.06;
+    max-width:820px;
+  }
+  .hero h1 em{
+    font-style:italic;color:var(--gold);
+  }
+  .hero p.lede{
+    margin-top:22px;
+    max-width:560px;
+    font-size:18px;
+    color:#3C4A45;
+  }
+  .hero-cta{
+    margin-top:34px;
+    display:flex;gap:14px;flex-wrap:wrap;
+  }
+  .btn-primary{
+    background:var(--teal);color:var(--paper);
+    font-weight:600;font-size:15px;
+    padding:15px 28px;border-radius:var(--radius);
+    text-decoration:none;display:inline-block;
+    border:1px solid var(--teal);
+    transition:transform .15s ease;
+  }
+  .btn-primary:hover{transform:translateY(-1px);}
+  .btn-ghost{
+    background:transparent;color:var(--teal-deep);
+    font-weight:600;font-size:15px;
+    padding:15px 28px;border-radius:var(--radius);
+    text-decoration:none;display:inline-block;
+    border:1px solid var(--teal-deep);
+  }
+  .hero-stat-row{
+    margin-top:56px;
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:0;
+    border-top:1px solid var(--line);
+    padding-top:24px;
+    max-width:640px;
+  }
+  .hero-stat b{
+    font-family:'Fraunces',serif;font-size:28px;color:var(--teal-deep);display:block;
+  }
+  .hero-stat .mono{color:#6B6350;margin-top:4px;}
+
+  /* ---------- section shared ---------- */
+  section{padding:76px 0;}
+  .section-head{max-width:620px;margin-bottom:48px;}
+  .section-head .mono{color:var(--gold);margin-bottom:14px;}
+  .section-head h2{font-size:clamp(28px,3.4vw,40px);}
+
+  /* ---------- value props ---------- */
+  .values{
+    background:var(--teal-deep);
+    color:var(--paper);
+  }
+  .values .section-head h2{color:var(--paper);}
+  .values .section-head .mono{color:var(--gold-soft);}
+  .value-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+    background:rgba(250,247,240,0.14);
+    border:1px solid rgba(250,247,240,0.14);
+  }
+  .value-card{
+    background:var(--teal-deep);
+    padding:32px 28px;
+  }
+  .value-card .num{
+    font-family:'JetBrains Mono';font-size:13px;color:var(--gold-soft);
+  }
+  .value-card h3{
+    color:var(--paper);font-size:20px;margin-top:14px;margin-bottom:10px;
+  }
+  .value-card p{
+    color:#C8D3CE;font-size:14.5px;
+  }
+
+  /* ---------- career path (signature) ---------- */
+  .path{background:var(--paper);}
+  .path-track{
+    position:relative;
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:28px;
+    margin-top:12px;
+  }
+  .path-track::before{
+    content:"";position:absolute;top:29px;left:0;right:0;height:1px;
+    background:repeating-linear-gradient(to right, var(--line) 0 8px, transparent 8px 14px);
+    z-index:0;
+  }
+  .path-step{position:relative;z-index:1;}
+  .path-dot{
+    width:58px;height:58px;
+    border:1px solid var(--teal-deep);
+    background:var(--paper);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces';font-weight:600;font-size:15px;color:var(--teal-deep);
+    transform:rotate(45deg);
+    margin-bottom:22px;
+  }
+  .path-dot span{transform:rotate(-45deg);}
+  .path-step:nth-child(2) .path-dot{background:var(--teal-deep);color:var(--gold-soft);}
+  .path-step:nth-child(3) .path-dot{background:var(--gold);border-color:var(--gold);color:var(--teal-deep);}
+  .path-step h3{font-size:19px;margin-bottom:8px;}
+  .path-step p{font-size:14px;color:#54574F;}
+
+  /* ---------- process timeline ---------- */
+  .process{background:var(--paper-dim);}
+  .steps{border-top:1px solid var(--line);}
+  .step-row{
+    display:grid;grid-template-columns:64px 1fr 2fr;
+    gap:24px;
+    padding:26px 0;
+    border-bottom:1px solid var(--line);
+    align-items:start;
+  }
+  .step-row .mono{color:var(--gold);padding-top:3px;}
+  .step-row h4{font-family:'Fraunces';font-size:18px;color:var(--teal-deep);}
+  .step-row p{font-size:14.5px;color:#4A4E45;}
+
+  /* ---------- form section ---------- */
+  .apply{
+    background:var(--teal);
+    color:var(--paper);
+  }
+  .apply-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:56px;
+    align-items:start;
+  }
+  .apply h2{color:var(--paper);font-size:clamp(26px,3.2vw,36px);}
+  .apply .mono{color:var(--gold-soft);margin-bottom:14px;}
+  .apply p.lede{color:#CFE0DB;max-width:420px;margin-top:16px;font-size:15.5px;}
+  .note-box{
+    margin-top:28px;padding:18px 20px;
+    border:1px solid rgba(250,247,240,0.25);
+    font-size:13.5px;color:#BFD4CE;
+  }
+  form{
+    background:var(--paper);
+    padding:36px;
+    border-radius:var(--radius);
+  }
+  .field{margin-bottom:18px;}
+  .field label{
+    display:block;font-size:12.5px;font-weight:600;color:var(--teal-deep);
+    margin-bottom:7px;letter-spacing:0.02em;
+  }
+  .field input, .field select{
+    width:100%;padding:12px 14px;
+    border:1px solid var(--line);border-radius:var(--radius);
+    font-family:'Inter';font-size:14.5px;color:var(--ink);
+    background:var(--paper);
+  }
+  .field input:focus, .field select:focus{
+    outline:2px solid var(--teal);outline-offset:1px;
+  }
+  .submit-btn{
+    width:100%;padding:15px;
+    background:var(--teal);color:var(--paper);
+    border:none;border-radius:var(--radius);
+    font-weight:700;font-size:15px;cursor:pointer;
+    margin-top:6px;
+    font-family:'Inter';
+  }
+  .submit-btn:hover{background:var(--teal-deep);}
+  .form-note{font-size:12px;color:#8A8474;margin-top:12px;text-align:center;}
+
+  footer{
+    padding:32px 0;
+    border-top:1px solid var(--line);
+    text-align:center;
+  }
+  footer p{font-size:12.5px;color:#8A8474;}
+
+  @media (max-width:760px){
+    .value-grid{grid-template-columns:1fr;}
+    .path-track{grid-template-columns:1fr;gap:34px;}
+    .path-track::before{display:none;}
+    .apply-grid{grid-template-columns:1fr;gap:32px;}
+    .step-row{grid-template-columns:40px 1fr;}
+    .step-row > p{grid-column:2/3;}
+    .hero-stat-row{grid-template-columns:1fr 1fr;row-gap:20px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand">Life Planner <span>Syariah</span></div>
+    <a class="cta-mini" href="#daftar">Konsultasi Gratis</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow mono">Peluang Karier · Manulife Syariah Indonesia</div>
+    <h1>Bangun karier yang <em>bermakna</em>,<br>bukan sekadar penghasilan.</h1>
+    <p class="lede">Jadi Life Planner Manulife Syariah — bantu keluarga Indonesia mendapat proteksi finansial berbasis syariah, sambil membangun bisnis dan karier Anda sendiri, dengan mentor dan sistem yang jelas.</p>
+    <div class="hero-cta">
+      <a href="#daftar" class="btn-primary">Ajukan Konsultasi Gratis</a>
+      <a href="#jenjang" class="btn-ghost">Lihat Jenjang Karier</a>
+    </div>
+    <div class="hero-stat-row">
+      <div class="hero-stat"><b>207 Jt+</b><span class="mono">penduduk belum terproteksi</span></div>
+      <div class="hero-stat"><b>3 Level</b><span class="mono">jenjang karier terstruktur</span></div>
+      <div class="hero-stat"><b>0 → 1</b><span class="mono">dibimbing dari nol</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="values">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="mono">Kenapa Life Planner Syariah</div>
+      <h2>Tiga alasan utama bergabung sekarang</h2>
+    </div>
+    <div class="value-grid">
+      <div class="value-card">
+        <div class="num">01</div>
+        <h3>Market Masih Sangat Luas</h3>
+        <p>Sebagian besar penduduk Indonesia masih belum memiliki proteksi asuransi — dan permintaan produk berbasis syariah terus tumbuh.</p>
+      </div>
+      <div class="value-card">
+        <div class="num">02</div>
+        <h3>Bisnis Bisa Diwariskan</h3>
+        <p>Jaringan dan hasil kerja Anda bisa diteruskan ke pasangan atau anak — bukan sekadar pekerjaan, tapi aset jangka panjang.</p>
+      </div>
+      <div class="value-card">
+        <div class="num">03</div>
+        <h3>Fleksibel, Tanpa Modal Besar</h3>
+        <p>Bisa dijalankan sambilan maupun penuh waktu. Anda mengatur sendiri ritme kerja sesuai kebutuhan hidup Anda.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="path" id="jenjang">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="mono">Jenjang Karier</div>
+      <h2>Tiga tingkatan, satu arah: naik.</h2>
+    </div>
+    <div class="path-track">
+      <div class="path-step">
+        <div class="path-dot"><span>LP</span></div>
+        <h3>Life Planner</h3>
+        <p>Titik awal karier Anda. Fokus membangun klien pertama dengan bimbingan penuh dari mentor.</p>
+      </div>
+      <div class="path-step">
+        <div class="path-dot"><span>BP</span></div>
+        <h3>Business Partner</h3>
+        <p>Mulai membangun tim kecil, memperluas jaringan, dan meningkatkan skala pendapatan.</p>
+      </div>
+      <div class="path-step">
+        <div class="path-dot"><span>SBP</span></div>
+        <h3>Senior Business Partner</h3>
+        <p>Memimpin tim yang lebih besar dengan struktur bonus dan kepemimpinan bisnis penuh.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="mono">Proses Bergabung</div>
+      <h2>Empat langkah menuju kode agen aktif</h2>
+    </div>
+    <div class="steps">
+      <div class="step-row">
+        <div class="mono">01</div>
+        <h4>Konsultasi Awal</h4>
+        <p>Diskusi singkat 15 menit untuk memahami tujuan Anda dan gambaran bisnis Life Planner.</p>
+      </div>
+      <div class="step-row">
+        <div class="mono">02</div>
+        <h4>Verifikasi & Pendaftaran</h4>
+        <p>Pengecekan status keagenan dan pendaftaran data diri melalui sistem resmi Manulife.</p>
+      </div>
+      <div class="step-row">
+        <div class="mono">03</div>
+        <h4>Training & Ujian Lisensi</h4>
+        <p>Mengikuti Sales Essential Training, lalu ujian lisensi AAJI dan/atau AASI.</p>
+      </div>
+      <div class="step-row">
+        <div class="mono">04</div>
+        <h4>Kode Agen Aktif</h4>
+        <p>Setelah lulus, kode agen diterbitkan dan Anda siap memulai sebagai Life Planner resmi.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="apply" id="daftar">
+  <div class="wrap apply-grid">
+    <div>
+      <div class="mono">Langkah Pertama</div>
+      <h2>Ajukan konsultasi gratis, tanpa komitmen.</h2>
+      <p class="lede">Isi data singkat di samping. Setelah dikirim, pesan Anda akan langsung terbuka di WhatsApp untuk dikirim ke tim kami — kami akan membalas dalam 1x24 jam kerja.</p>
+      <div class="note-box">
+        Data Anda hanya digunakan untuk keperluan konsultasi rekrutmen dan tidak dibagikan ke pihak lain di luar proses ini.
+      </div>
+    </div>
+
+    <form id="leadForm">
+      <div class="field">
+        <label for="nama">Nama Lengkap</label>
+        <input type="text" id="nama" required placeholder="Sesuai KTP">
+      </div>
+      <div class="field">
+        <label for="wa">Nomor WhatsApp Aktif</label>
+        <input type="tel" id="wa" required placeholder="08xxxxxxxxxx">
+      </div>
+      <div class="field">
+        <label for="status">Status Pekerjaan Saat Ini</label>
+        <select id="status" required>
+          <option value="">Pilih salah satu</option>
+          <option>Karyawan</option>
+          <option>Wirausaha</option>
+          <option>Freelance</option>
+          <option>Belum bekerja</option>
+          <option>Lainnya</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="minat">Tertarik Full-time atau Sambilan?</label>
+        <select id="minat" required>
+          <option value="">Pilih salah satu</option>
+          <option>Full-time</option>
+          <option>Sambilan</option>
+          <option>Belum yakin</option>
+        </select>
+      </div>
+      <button type="submit" class="submit-btn">Kirim & Lanjut ke WhatsApp</button>
+      <p class="form-note">Anda akan diarahkan ke WhatsApp untuk mengirim pesan ini</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Halaman ini bukan situs resmi PT Asuransi Jiwa Manulife Indonesia Syariah. Dikelola oleh mitra Life Planner untuk keperluan konsultasi awal.</p>
+  </div>
+</footer>
+
+<script>
+  // GANTI nomor WhatsApp di bawah ini dengan nomor Anda (format: 62xxxxxxxxxx, tanpa + atau 0 di depan)
+  const WA_NUMBER = "6287855858434";
+
+  document.getElementById('leadForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const nama = document.getElementById('nama').value.trim();
+    const wa = document.getElementById('wa').value.trim();
+    const status = document.getElementById('status').value;
+    const minat = document.getElementById('minat').value;
+
+    const pesan =
+`Halo, saya tertarik dengan peluang Life Planner Manulife Syariah.
+
+Nama: ${nama}
+No. WhatsApp: ${wa}
+Status pekerjaan: ${status}
+Minat: ${minat}
+
+Mohon info lebih lanjut. Terima kasih.`;
+
+    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(pesan)}`;
+    window.open(url, '_blank');
+  });
+</script>
+
+</body>
+</html>
